@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trigonometry — Complete Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #13161e;
+    --surface2: #1a1e2a;
+    --border: #252a38;
+    --accent: #c8a96e;
+    --accent2: #6e9dc8;
+    --accent3: #c86e8a;
+    --text: #e8e4dc;
+    --text-muted: #8a8a9a;
+    --text-dim: #5a5a6a;
+    --green: #6ec88a;
+    --radius: 6px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 3.5rem 2rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 50%, rgba(200,169,110,.07) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 80% 50%, rgba(110,157,200,.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: .7rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: .8rem;
+  }
+  header h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 400;
+    letter-spacing: -.01em;
+    color: var(--text);
+    line-height: 1.1;
+  }
+  header h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .header-sub {
+    margin-top: .9rem;
+    color: var(--text-muted);
+    font-size: .85rem;
+    letter-spacing: .06em;
+  }
+  .header-pills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .5rem;
+    margin-top: 1.4rem;
+  }
+  .pill {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: .25rem .85rem;
+    font-family: 'DM Mono', monospace;
+    font-size: .72rem;
+    color: var(--text-muted);
+    letter-spacing: .04em;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(13,15,20,.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: .6rem 1rem;
+    display: flex;
+    gap: .25rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  nav a {
+    flex-shrink: 0;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-family: 'DM Mono', monospace;
+    font-size: .72rem;
+    letter-spacing: .05em;
+    padding: .3rem .7rem;
+    border-radius: var(--radius);
+    transition: color .2s, background .2s;
+  }
+  nav a:hover { color: var(--accent); background: rgba(200,169,110,.08); }
+
+  /* ── LAYOUT ── */
+  main { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+
+  /* ── SECTIONS ── */
+  .section {
+    margin-bottom: 3.5rem;
+    animation: fadeUp .5s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 1.6rem;
+    padding-bottom: .8rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: .7rem;
+    color: var(--accent);
+    letter-spacing: .1em;
+    flex-shrink: 0;
+  }
+  .section h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.65rem;
+    font-weight: 400;
+    color: var(--text);
+  }
+
+  .subsection { margin-bottom: 2rem; }
+  .subsection h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: .78rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  .subsection h3::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  p { color: var(--text-muted); margin-bottom: .75rem; }
+  p:last-child { margin-bottom: 0; }
+
+  /* ── TABLES ── */
+  .table-wrap { overflow-x: auto; margin: 1rem 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .86rem;
+  }
+  thead tr {
+    background: var(--surface2);
+    border-bottom: 2px solid var(--border);
+  }
+  th {
+    padding: .65rem 1rem;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: .7rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  td {
+    padding: .55rem 1rem;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,.02); }
+  td:first-child { color: var(--text); font-family: 'DM Mono', monospace; font-size: .82rem; }
+
+  /* sign colors in quadrant table */
+  .pos { color: var(--green); font-weight: 700; }
+  .neg { color: var(--accent3); font-weight: 700; }
+
+  /* ── BOXES ── */
+  .box {
+    border-radius: var(--radius);
+    padding: 1.1rem 1.3rem;
+    margin: 1.1rem 0;
+    font-size: .88rem;
+  }
+  .box-trick {
+    background: rgba(200,169,110,.06);
+    border: 1px solid rgba(200,169,110,.25);
+    border-left: 3px solid var(--accent);
+  }
+  .box-trick .box-label {
+    font-family: 'DM Mono', monospace;
+    font-size: .68rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: .5rem;
+  }
+  .box-note {
+    background: rgba(110,157,200,.06);
+    border: 1px solid rgba(110,157,200,.2);
+    border-left: 3px solid var(--accent2);
+  }
+  .box-note .box-label {
+    font-family: 'DM Mono', monospace;
+    font-size: .68rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: .5rem;
+  }
+  .box-warn {
+    background: rgba(200,110,138,.06);
+    border: 1px solid rgba(200,110,138,.2);
+    border-left: 3px solid var(--accent3);
+  }
+  .box-warn .box-label {
+    font-family: 'DM Mono', monospace;
+    font-size: .68rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent3);
+    margin-bottom: .5rem;
+  }
+  .box p { color: var(--text-muted); margin: 0; }
+
+  /* ── FORMULA GRID ── */
+  .formula-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: .8rem;
+    margin: 1rem 0;
+  }
+  .formula-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: .9rem 1.1rem;
+  }
+  .formula-card .fc-label {
+    font-family: 'DM Mono', monospace;
+    font-size: .67rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: .45rem;
+  }
+  .formula-card .fc-body {
+    font-family: 'DM Mono', monospace;
+    font-size: .82rem;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* ── INLINE CODE / MATH ── */
+  code {
+    font-family: 'DM Mono', monospace;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: .05em .35em;
+    font-size: .85em;
+    color: var(--accent);
+  }
+
+  /* ── MNEMONIC DISPLAY ── */
+  .mnemonic {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin: .8rem 0;
+  }
+  .mnem-word {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: .3rem .7rem;
+    font-family: 'DM Mono', monospace;
+    font-size: .8rem;
+  }
+  .mnem-word span { color: var(--accent); font-weight: 700; }
+
+  /* ── UNIT CIRCLE DISPLAY ── */
+  .circle-table {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: .5rem;
+    margin: 1rem 0;
+  }
+  .circle-cell {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: .6rem .9rem;
+    font-family: 'DM Mono', monospace;
+    font-size: .78rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: .5rem;
+  }
+  .circle-cell .deg { color: var(--text-muted); }
+  .circle-cell .coords { color: var(--accent); }
+  .circle-cell .tan-val { color: var(--accent2); font-size: .72rem; }
+
+  /* ── STEP LIST ── */
+  .step-list { counter-reset: steps; margin: .8rem 0; }
+  .step-item {
+    counter-increment: steps;
+    display: flex;
+    gap: .9rem;
+    align-items: flex-start;
+    margin-bottom: .6rem;
+    color: var(--text-muted);
+    font-size: .88rem;
+  }
+  .step-item::before {
+    content: counter(steps);
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: .68rem;
+    color: var(--accent);
+    margin-top: .1rem;
+  }
+
+  /* ── MISTAKE LIST ── */
+  .mistake-list { list-style: none; margin: .8rem 0; }
+  .mistake-list li {
+    display: flex;
+    gap: .8rem;
+    align-items: flex-start;
+    padding: .55rem 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: .88rem;
+  }
+  .mistake-list li:last-child { border-bottom: none; }
+  .mistake-list li::before {
+    content: '✕';
+    color: var(--accent3);
+    font-size: .8rem;
+    flex-shrink: 0;
+    margin-top: .1rem;
+  }
+
+  /* ── IDENTITY HIERARCHY ── */
+  .hierarchy {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.2rem;
+    margin: 1rem 0;
+    counter-reset: hier;
+  }
+  .hier-item {
+    counter-increment: hier;
+    display: flex;
+    gap: .8rem;
+    align-items: flex-start;
+    padding: .5rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: .88rem;
+  }
+  .hier-item:last-child { border-bottom: none; }
+  .hier-num {
+    flex-shrink: 0;
+    font-family: 'DM Mono', monospace;
+    font-size: .7rem;
+    color: var(--accent);
+    padding-top: .1rem;
+    min-width: 1.2rem;
+  }
+  .hier-item p { margin: 0; color: var(--text-muted); }
+  .hier-item strong { color: var(--text); font-weight: 700; }
+
+  /* ── CHEATSHEET ── */
+  .cheatsheet {
+    background: var(--surface);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-top: 1rem;
+  }
+  .cheatsheet h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+    padding-bottom: .6rem;
+    border-bottom: 1px solid rgba(200,169,110,.25);
+  }
+  .cs-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .5rem 1.5rem;
+    margin-bottom: .3rem;
+  }
+  .cs-item {
+    font-family: 'DM Mono', monospace;
+    font-size: .78rem;
+    color: var(--text-muted);
+    padding: .3rem 0;
+    border-bottom: 1px solid var(--border);
+    line-height: 1.4;
+  }
+  .cs-item span { color: var(--text); }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+    font-size: .7rem;
+    letter-spacing: .06em;
+    border-top: 1px solid var(--border);
+  }
+  footer em { color: var(--accent); font-style: normal; }
+
+  @media (max-width: 600px) {
+    .cs-row { grid-template-columns: 1fr; }
+    .formula-grid { grid-template-columns: 1fr; }
+    .circle-table { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-tag">Complete Study Guide</div>
+  <h1><em>Trigonometry</em></h1>
+  <div class="header-sub">Six Functions · Unit Circle · Graphs & Transformations · Formulas · Memory Tricks</div>
+  <div class="header-pills">
+    <span class="pill">SOH-CAH-TOA</span>
+    <span class="pill">Unit Circle</span>
+    <span class="pill">Identities</span>
+    <span class="pill">Graphs</span>
+    <span class="pill">Inverses</span>
+    <span class="pill">Law of Sines / Cosines</span>
+  </div>
+</header>
+
+<nav>
+  <a href="#s1">1. Six Functions</a>
+  <a href="#s2">2. Unit Circle</a>
+  <a href="#s3">3. Graphs</a>
+  <a href="#s4">4. Asymptotes</a>
+  <a href="#s5">5. Formulas</a>
+  <a href="#s6">6. Inverses</a>
+  <a href="#s7">7. Memory Guide</a>
+  <a href="#s8">8. Cheat Sheet</a>
+</nav>
+
+<main>
+
+<!-- ══════════════════════════════════════════ 1 ══ -->
+<section class="section" id="s1">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2>The Six Trigonometric Functions</h2>
+  </div>
+
+  <div class="subsection">
+    <h3>1.1 Right Triangle Definitions</h3>
+    <p>In a right triangle with acute angle <code>θ</code>, label the three sides: <strong>Opposite</strong> (across from θ), <strong>Adjacent</strong> (next to θ, not the hypotenuse), <strong>Hypotenuse</strong> (longest side, across from 90°).</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Function</th><th>Abbrev.</th><th>Ratio</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>Sine</td><td><code>sin θ</code></td><td>OPP / HYP</td><td>Opposite over Hypotenuse</td></tr>
+          <tr><td>Cosine</td><td><code>cos θ</code></td><td>ADJ / HYP</td><td>Adjacent over Hypotenuse</td></tr>
+          <tr><td>Tangent</td><td><code>tan θ</code></td><td>OPP / ADJ</td><td>Opposite over Adjacent</td></tr>
+          <tr><td>Cosecant</td><td><code>csc θ</code></td><td>HYP / OPP</td><td>Reciprocal of sin</td></tr>
+          <tr><td>Secant</td><td><code>sec θ</code></td><td>HYP / ADJ</td><td>Reciprocal of cos</td></tr>
+          <tr><td>Cotangent</td><td><code>cot θ</code></td><td>ADJ / OPP</td><td>Reciprocal of tan</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="box box-trick">
+      <div class="box-label">Memory Trick — SOH CAH TOA</div>
+      <div class="mnemonic">
+        <div class="mnem-word"><span>S</span>OH → Sin = Opp/Hyp</div>
+        <div class="mnem-word"><span>C</span>AH → Cos = Adj/Hyp</div>
+        <div class="mnem-word"><span>T</span>OA → Tan = Opp/Adj</div>
+      </div>
+      <p>For reciprocals: <strong>CHO SHA CAO</strong> — Csc = H/O, Sec = H/A, Cot = A/O. Or simply flip SOH CAH TOA.</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>1.2 Unit Circle Definitions</h3>
+    <p>For any angle <code>θ</code> whose terminal side hits the unit circle at point <code>(x, y)</code>:</p>
+    <div class="formula-grid">
+      <div class="formula-card"><div class="fc-label">Sine</div><div class="fc-body">sin θ = y</div></div>
+      <div class="formula-card"><div class="fc-label">Cosine</div><div class="fc-body">cos θ = x</div></div>
+      <div class="formula-card"><div class="fc-label">Tangent</div><div class="fc-body">tan θ = y/x &nbsp;(x ≠ 0)</div></div>
+      <div class="formula-card"><div class="fc-label">Cosecant</div><div class="fc-body">csc θ = 1/y &nbsp;(y ≠ 0)</div></div>
+      <div class="formula-card"><div class="fc-label">Secant</div><div class="fc-body">sec θ = 1/x &nbsp;(x ≠ 0)</div></div>
+      <div class="formula-card"><div class="fc-label">Cotangent</div><div class="fc-body">cot θ = x/y &nbsp;(y ≠ 0)</div></div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>1.3 Reciprocal & Ratio Identities</h3>
+    <div class="formula-grid">
+      <div class="formula-card"><div class="fc-label">Reciprocals</div><div class="fc-body">sin θ · csc θ = 1<br>cos θ · sec θ = 1<br>tan θ · cot θ = 1</div></div>
+      <div class="formula-card"><div class="fc-label">From reciprocals</div><div class="fc-body">csc θ = 1/sin θ<br>sec θ = 1/cos θ<br>cot θ = 1/tan θ</div></div>
+      <div class="formula-card"><div class="fc-label">Ratio identities</div><div class="fc-body">tan θ = sin θ / cos θ<br>cot θ = cos θ / sin θ</div></div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>1.4 Signs by Quadrant — "All Students Take Calculus"</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Quadrant</th><th>Angles</th><th>sin</th><th>cos</th><th>tan</th><th>csc</th><th>sec</th><th>cot</th></tr></thead>
+        <tbody>
+          <tr><td>I (All)</td><td>0°–90°</td><td class="pos">+</td><td class="pos">+</td><td class="pos">+</td><td class="pos">+</td><td class="pos">+</td><td class="pos">+</td></tr>
+          <tr><td>II (Sin)</td><td>90°–180°</td><td class="pos">+</td><td class="neg">−</td><td class="neg">−</td><td class="pos">+</td><td class="neg">−</td><td class="neg">−</td></tr>
+          <tr><td>III (Tan)</td><td>180°–270°</td><td class="neg">−</td><td class="neg">−</td><td class="pos">+</td><td class="neg">−</td><td class="neg">−</td><td class="pos">+</td></tr>
+          <tr><td>IV (Cos)</td><td>270°–360°</td><td class="neg">−</td><td class="pos">+</td><td class="neg">−</td><td class="neg">−</td><td class="pos">+</td><td class="neg">−</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="box box-trick">
+      <div class="box-label">Mnemonic</div>
+      <div class="mnemonic">
+        <div class="mnem-word">Q1 → <span>A</span>ll positive</div>
+        <div class="mnem-word">Q2 → <span>S</span>ine positive</div>
+        <div class="mnem-word">Q3 → <span>T</span>an positive</div>
+        <div class="mnem-word">Q4 → <span>C</span>os positive</div>
+      </div>
+      <p>Reciprocal functions always share their partner's sign.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ 2 ══ -->
+<section class="section" id="s2">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2>The Unit Circle</h2>
+  </div>
+
+  <div class="subsection">
+    <h3>2.1 What It Is</h3>
+    <p>A circle with <strong>radius = 1</strong> centered at the origin. Every point has coordinates <code>(cos θ, sin θ)</code> — the foundation of all trigonometry.</p>
+  </div>
+
+  <div class="subsection">
+    <h3>2.2 Key Angles — Degrees, Radians & Values</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Degrees</th><th>Radians</th><th>cos θ (x)</th><th>sin θ (y)</th><th>tan θ</th></tr></thead>
+        <tbody>
+          <tr><td>0°</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+          <tr><td>30°</td><td>π/6</td><td>√3/2</td><td>1/2</td><td>√3/3</td></tr>
+          <tr><td>45°</td><td>π/4</td><td>√2/2</td><td>√2/2</td><td>1</td></tr>
+          <tr><td>60°</td><td>π/3</td><td>1/2</td><td>√3/2</td><td>√3</td></tr>
+          <tr><td>90°</td><td>π/2</td><td>0</td><td>1</td><td>Undefined</td></tr>
+          <tr><td>120°</td><td>2π/3</td><td>−1/2</td><td>√3/2</td><td>−√3</td></tr>
+          <tr><td>135°</td><td>3π/4</td><td>−√2/2</td><td>√2/2</td><td>−1</td></tr>
+          <tr><td>150°</td><td>5π/6</td><td>−√3/2</td><td>1/2</td><td>−√3/3</td></tr>
+          <tr><td>180°</td><td>π</td><td>−1</td><td>0</td><td>0</td></tr>
+          <tr><td>210°</td><td>7π/6</td><td>−√3/2</td><td>−1/2</td><td>√3/3</td></tr>
+          <tr><td>225°</td><td>5π/4</td><td>−√2/2</td><td>−√2/2</td><td>1</td></tr>
+          <tr><td>240°</td><td>4π/3</td><td>−1/2</td><td>−√3/2</td><td>√3</td></tr>
+          <tr><td>270°</td><td>3π/2</td><td>0</td><td>−1</td><td>Undefined</td></tr>
+          <tr><td>300°</td><td>5π/3</td><td>1/2</td><td>−√3/2</td><td>−√3</td></tr>
+          <tr><td>315°</td><td>7π/4</td><td>√2/2</td><td>−√2/2</td><td>−1</td></tr>
+          <tr><td>330°</td><td>11π/6</td><td>√3/2</td><td>−1/2</td><td>−√3/3</td></tr>
+          <tr><td>360°</td><td>2π</td><td>1</td><td>0</td><td>0</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>2.3 How to Memorize the Unit Circle</h3>
+    <div class="step-list">
+      <div class="step-item"><span>Learn the 4 axis points: <code>(1,0)</code> · <code>(0,1)</code> · <code>(−1,0)</code> · <code>(0,−1)</code></span></div>
+      <div class="step-item"><span>Memorize Q1 sin values (0°→90°): <code>0, 1/2, √2/2, √3/2, 1</code></span></div>
+      <div class="step-item"><span>Cosine is sin in <em>reverse</em>: <code>1, √3/2, √2/2, 1/2, 0</code></span></div>
+      <div class="step-item"><span>Use reference angles for other quadrants — same magnitude, sign from quadrant rule.</span></div>
+    </div>
+    <div class="box box-trick">
+      <div class="box-label">The √3, √2, 1 Pattern</div>
+      <p>Numerators in Q1 are just <code>√3, √2, 1</code> (and reverses), all over 2. You only need to memorize one row — the other is the reverse!</p>
+    </div>
+    <div class="box box-note">
+      <div class="box-label">Reference Angle Rules</div>
+      <p>Q2: ref = 180° − θ → sin stays +, cos −<br>
+         Q3: ref = θ − 180° → sin −, cos −<br>
+         Q4: ref = 360° − θ → sin −, cos stays +</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>2.4 Degrees ↔ Radians Conversion</h3>
+    <div class="formula-grid">
+      <div class="formula-card"><div class="fc-label">Degrees → Radians</div><div class="fc-body">radians = degrees × (π / 180)</div></div>
+      <div class="formula-card"><div class="fc-label">Radians → Degrees</div><div class="fc-body">degrees = radians × (180 / π)</div></div>
+    </div>
+    <div class="box box-note">
+      <div class="box-label">Quick Conversions</div>
+      <p>π = 180° · π/2 = 90° · π/3 = 60° · π/4 = 45° · π/6 = 30°<br>
+         2π = 360° · 3π/2 = 270° · 2π/3 = 120° · 3π/4 = 135° · 5π/6 = 150°</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ 3 ══ -->
+<section class="section" id="s3">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2>Graphs and Transformations</h2>
+  </div>
+
+  <div class="subsection">
+    <h3>3.1 Parent Function Characteristics</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Function</th><th>Domain</th><th>Range</th><th>Period</th><th>Amplitude</th></tr></thead>
+        <tbody>
+          <tr><td>y = sin x</td><td>All reals</td><td>[−1, 1]</td><td>2π</td><td>1</td></tr>
+          <tr><td>y = cos x</td><td>All reals</td><td>[−1, 1]</td><td>2π</td><td>1</td></tr>
+          <tr><td>y = tan x</td><td>x ≠ π/2 + nπ</td><td>(−∞, ∞)</td><td>π</td><td>None</td></tr>
+          <tr><td>y = csc x</td><td>x ≠ nπ</td><td>(−∞,−1]∪[1,∞)</td><td>2π</td><td>None</td></tr>
+          <tr><td>y = sec x</td><td>x ≠ π/2 + nπ</td><td>(−∞,−1]∪[1,∞)</td><td>2π</td><td>None</td></tr>
+          <tr><td>y = cot x</td><td>x ≠ nπ</td><td>(−∞, ∞)</td><td>π</td><td>None</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>3.2 Key Shape Notes</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Function</th><th>Behavior</th></tr></thead>
+        <tbody>
+          <tr><td>sin x</td><td>Starts at (0,0) → rises to 1 at π/2 → back to 0 at π → down to −1 at 3π/2 → back to 0 at 2π</td></tr>
+          <tr><td>cos x</td><td>Starts at (0,1) → falls to 0 at π/2 → down to −1 at π → back to 0 at 3π/2 → up to 1 at 2π</td></tr>
+          <tr><td>tan x</td><td>Increasing S-curve between vertical asymptotes at x = π/2 + nπ</td></tr>
+          <tr><td>csc x</td><td>"Upside-down hat" — U-shaped arches above and below x-axis; touches ±1 where sin = ±1</td></tr>
+          <tr><td>sec x</td><td>Same arch pattern as csc but shifted; touches ±1 where cos = ±1</td></tr>
+          <tr><td>cot x</td><td>Decreasing S-curve between asymptotes at x = nπ</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>3.3 General Transformation Formula</h3>
+    <div class="box box-note">
+      <div class="box-label">Formula</div>
+      <p><code>y = A · f(Bx − C) + D</code></p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Parameter</th><th>Name</th><th>Effect</th></tr></thead>
+        <tbody>
+          <tr><td>A</td><td>Amplitude</td><td>Vertical stretch/compress; |A| > 1 → taller; 0 &lt; |A| &lt; 1 → shorter; A &lt; 0 → reflects over x-axis</td></tr>
+          <tr><td>B</td><td>Frequency</td><td>Horizontal stretch/compress; New Period = (Original Period) / |B|</td></tr>
+          <tr><td>C</td><td>Phase Shift</td><td>Horizontal translation; Phase Shift = C/B; positive → shifts RIGHT; negative → shifts LEFT</td></tr>
+          <tr><td>D</td><td>Vertical Shift</td><td>Moves midline up (D > 0) or down (D &lt; 0); new midline is y = D</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>3.4 Graphing a Transformed Function — Step by Step</h3>
+    <div class="step-list">
+      <div class="step-item"><span>Identify A, B, C, D from <code>y = A·f(Bx − C) + D</code></span></div>
+      <div class="step-item"><span>Find new period = Original Period / |B|</span></div>
+      <div class="step-item"><span>Find phase shift = C / B (your new starting x)</span></div>
+      <div class="step-item"><span>Find midline: y = D</span></div>
+      <div class="step-item"><span>Find max = D + |A| and min = D − |A|</span></div>
+      <div class="step-item"><span>Divide one period into 4 equal intervals (5 key points for sin/cos)</span></div>
+      <div class="step-item"><span>Apply reflection if A &lt; 0, then sketch</span></div>
+    </div>
+    <div class="box box-trick">
+      <div class="box-label">Worked Example — y = −3 sin(2x − π) + 1</div>
+      <p>A = −3, B = 2, C = π, D = 1<br>
+         Amplitude = |−3| = <strong>3</strong> · Reflection: <strong>yes</strong><br>
+         Period = 2π / 2 = <strong>π</strong> · Phase Shift = π/2 to the <strong>right</strong><br>
+         Midline: y = 1 · Max: y = <strong>4</strong> · Min: y = <strong>−2</strong><br>
+         Key x-values: π/2, 3π/4, π, 5π/4, 3π/2</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ 4 ══ -->
+<section class="section" id="s4">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2>Asymptotes</h2>
+  </div>
+
+  <div class="subsection">
+    <h3>4.1 Why Asymptotes Occur</h3>
+    <p>Vertical asymptotes appear wherever a trig function is undefined — where its denominator equals zero. <code>sin x</code> and <code>cos x</code> have <em>no</em> vertical asymptotes (defined for all reals).</p>
+  </div>
+
+  <div class="subsection">
+    <h3>4.2 Asymptote Formulas</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Function</th><th>Vertical Asymptotes</th><th>Reason</th></tr></thead>
+        <tbody>
+          <tr><td>tan x = sin x / cos x</td><td>x = π/2 + nπ</td><td>cos x = 0</td></tr>
+          <tr><td>csc x = 1 / sin x</td><td>x = nπ</td><td>sin x = 0</td></tr>
+          <tr><td>sec x = 1 / cos x</td><td>x = π/2 + nπ</td><td>cos x = 0</td></tr>
+          <tr><td>cot x = cos x / sin x</td><td>x = nπ</td><td>sin x = 0</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>4.3 Asymptotes After Transformations</h3>
+    <p>For <code>y = A·tan(Bx − C) + D</code>, set the argument equal to the critical value and solve for x.</p>
+    <div class="formula-grid">
+      <div class="formula-card"><div class="fc-label">For tan/sec</div><div class="fc-body">Set Bx − C = π/2 + nπ<br>→ solve for x</div></div>
+      <div class="formula-card"><div class="fc-label">For csc/cot</div><div class="fc-body">Set Bx − C = nπ<br>→ solve for x</div></div>
+    </div>
+    <div class="box box-trick">
+      <div class="box-label">Example — Asymptotes of y = tan(2x − π)</div>
+      <p>Set 2x − π = π/2 + nπ → 2x = 3π/2 + nπ → <strong>x = 3π/4 + nπ/2</strong><br>
+      Asymptotes at x = 3π/4, 5π/4, 7π/4, … (every π/2 apart)</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>4.4 Finding Asymptotes — Checklist</h3>
+    <div class="step-list">
+      <div class="step-item"><span>Identify which function you have (tan, csc, sec, or cot)</span></div>
+      <div class="step-item"><span>Write the standard asymptote formula from the table above</span></div>
+      <div class="step-item"><span>Replace x with your full argument (e.g., 3x + π/4)</span></div>
+      <div class="step-item"><span>Set equal to the critical value and solve for x</span></div>
+      <div class="step-item"><span>Spacing between consecutive asymptotes = period of the function</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ 5 ══ -->
+<section class="section" id="s5">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2>All Essential Formulas</h2>
+  </div>
+
+  <div class="subsection">
+    <h3>5.1 Pythagorean Identities</h3>
+    <div class="formula-grid">
+      <div class="formula-card"><div class="fc-label">Fundamental</div><div class="fc-body">sin²θ + cos²θ = 1</div></div>
+      <div class="formula-card"><div class="fc-label">Divide by cos²θ</div><div class="fc-body">1 + tan²θ = sec²θ</div></div>
+      <div class="formula-card"><div class="fc-label">Divide by sin²θ</div><div class="fc-body">1 + cot²θ = csc²θ</div></div>
+    </div>
+    <div class="box box-trick">
+      <div class="box-label">Shortcut</div>
+      <p>Only memorize <code>sin²θ + cos²θ = 1</code>. Derive the others by dividing through. Useful rearrangements: <code>sin²θ = 1 − cos²θ</code> and <code>cos²θ = 1 − sin²θ</code>.</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>5.2 Co-function Identities</h3>
+    <div class="formula-grid">
+      <div class="formula-card"><div class="fc-label">Sine / Cosine</div><div class="fc-body">sin θ = cos(90° − θ)<br>cos θ = sin(90° − θ)</div></div>
+      <div class="formula-card"><div class="fc-label">Tan / Cot</div><div class="fc-body">tan θ = cot(90° − θ)<br>cot θ = tan(90° − θ)</div></div>
+      <div class="formula-card"><div class="fc-label">Sec / Csc</div><div class="fc-body">sec θ = csc(90° − θ)<br>csc θ = sec(90° − θ)</div></div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>5.3 Even / Odd Identities</h3>
+    <div class="formula-grid">
+      <div class="formula-card"><div class="fc-label">Even (cos, sec)</div><div class="fc-body">cos(−θ) = cos θ<br>sec(−θ) = sec θ</div></div>
+      <div class="formula-card"><div class="fc-label">Odd (sin, tan, csc, cot)</div><div class="fc-body">sin(−θ) = −sin θ<br>tan(−θ) = −tan θ<br>csc(−θ) = −csc θ<br>cot(−θ) = −cot θ</div></div>
+    </div>
+    <div class="box box-trick">
+      <div class="box-label">Memory Hook</div>
+      <p>Only <strong>C</strong>os and <strong>S</strong>ec are EVEN (C comes before S in alphabet). All 4 others are ODD.</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>5.4 Sum & Difference Formulas</h3>
+    <div class="formula-grid">
+      <div class="formula-card"><div class="fc-label">Sine</div><div class="fc-body">sin(A ± B) = sin A cos B ± cos A sin B</div></div>
+      <div class="formula-card"><div class="fc-label">Cosine (signs flip!)</div><div class="fc-body">cos(A ± B) = cos A cos B ∓ sin A sin B</div></div>
+      <div class="formula-card"><div class="fc-label">Tangent</div><div class="fc-body">tan(A ± B) = (tan A ± tan B) / (1 ∓ tan A tan B)</div></div>
+    </div>
+    <div class="box box-trick">
+      <div class="box-label">Memory Hook</div>
+      <p>SIN: same sign pattern. COS: signs FLIP. TAN: top uses given sign, bottom uses opposite sign.</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>5.5 Double Angle Formulas</h3>
+    <div class="formula-grid">
+      <div class="formula-card"><div class="fc-label">Sine</div><div class="fc-body">sin(2θ) = 2 sin θ cos θ</div></div>
+      <div class="formula-card"><div class="fc-label">Cosine (3 forms)</div><div class="fc-body">cos(2θ) = cos²θ − sin²θ<br>= 2cos²θ − 1<br>= 1 − 2sin²θ</div></div>
+      <div class="formula-card"><div class="fc-label">Tangent</div><div class="fc-body">tan(2θ) = 2 tan θ / (1 − tan²θ)</div></div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>5.6 Half Angle Formulas</h3>
+    <div class="formula-grid">
+      <div class="formula-card"><div class="fc-label">Sine</div><div class="fc-body">sin(θ/2) = ± √[(1 − cos θ) / 2]</div></div>
+      <div class="formula-card"><div class="fc-label">Cosine</div><div class="fc-body">cos(θ/2) = ± √[(1 + cos θ) / 2]</div></div>
+      <div class="formula-card"><div class="fc-label">Tangent (3 forms)</div><div class="fc-body">tan(θ/2) = ± √[(1−cosθ)/(1+cosθ)]<br>= sin θ / (1 + cos θ)<br>= (1 − cos θ) / sin θ</div></div>
+    </div>
+    <div class="box box-note">
+      <div class="box-label">Note</div>
+      <p>The ± depends on which quadrant θ/2 lies in.</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>5.7 Product-to-Sum Formulas</h3>
+    <div class="formula-grid">
+      <div class="formula-card"><div class="fc-label">sin · sin</div><div class="fc-body">sin A sin B = ½[cos(A−B) − cos(A+B)]</div></div>
+      <div class="formula-card"><div class="fc-label">cos · cos</div><div class="fc-body">cos A cos B = ½[cos(A−B) + cos(A+B)]</div></div>
+      <div class="formula-card"><div class="fc-label">sin · cos</div><div class="fc-body">sin A cos B = ½[sin(A+B) + sin(A−B)]</div></div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>5.8 Sum-to-Product Formulas</h3>
+    <div class="formula-grid">
+      <div class="formula-card"><div class="fc-label">sin A + sin B</div><div class="fc-body">2 sin[(A+B)/2] cos[(A−B)/2]</div></div>
+      <div class="formula-card"><div class="fc-label">sin A − sin B</div><div class="fc-body">2 cos[(A+B)/2] sin[(A−B)/2]</div></div>
+      <div class="formula-card"><div class="fc-label">cos A + cos B</div><div class="fc-body">2 cos[(A+B)/2] cos[(A−B)/2]</div></div>
+      <div class="formula-card"><div class="fc-label">cos A − cos B</div><div class="fc-body">−2 sin[(A+B)/2] sin[(A−B)/2]</div></div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>5.9 Power-Reducing Formulas</h3>
+    <div class="formula-grid">
+      <div class="formula-card"><div class="fc-label">sin²θ</div><div class="fc-body">(1 − cos 2θ) / 2</div></div>
+      <div class="formula-card"><div class="fc-label">cos²θ</div><div class="fc-body">(1 + cos 2θ) / 2</div></div>
+      <div class="formula-card"><div class="fc-label">tan²θ</div><div class="fc-body">(1 − cos 2θ) / (1 + cos 2θ)</div></div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>5.10 Law of Sines & Law of Cosines</h3>
+    <p>For non-right triangles with sides a, b, c opposite to angles A, B, C:</p>
+    <div class="formula-grid">
+      <div class="formula-card"><div class="fc-label">Law of Sines</div><div class="fc-body">a/sin A = b/sin B = c/sin C</div></div>
+      <div class="formula-card"><div class="fc-label">Law of Cosines</div><div class="fc-body">c² = a² + b² − 2ab cos C<br>a² = b² + c² − 2bc cos A</div></div>
+    </div>
+    <div class="box box-note">
+      <div class="box-label">When to Use Which</div>
+      <p><strong>Law of Sines:</strong> use when you know an angle AND the side opposite it.<br>
+         <strong>Law of Cosines:</strong> use for SSS (all 3 sides) or SAS (2 sides + included angle).</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ 6 ══ -->
+<section class="section" id="s6">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <h2>Inverse Trigonometric Functions</h2>
+  </div>
+
+  <div class="subsection">
+    <h3>6.1 What They Do</h3>
+    <p>Inverse trig functions answer: <em>"What angle gives this trig value?"</em> Written as <code>sin⁻¹(x)</code> or <code>arcsin(x)</code>.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Function</th><th>Domain</th><th>Range</th><th>Reads as…</th></tr></thead>
+        <tbody>
+          <tr><td>arcsin / sin⁻¹</td><td>[−1, 1]</td><td>[−π/2, π/2] (Q1 & Q4)</td><td>The angle whose sine is x</td></tr>
+          <tr><td>arccos / cos⁻¹</td><td>[−1, 1]</td><td>[0, π] (Q1 & Q2)</td><td>The angle whose cosine is x</td></tr>
+          <tr><td>arctan / tan⁻¹</td><td>(−∞, ∞)</td><td>(−π/2, π/2) (Q1 & Q4)</td><td>The angle whose tangent is x</td></tr>
+          <tr><td>arccsc / csc⁻¹</td><td>(−∞,−1]∪[1,∞)</td><td>[−π/2,0)∪(0,π/2]</td><td>The angle whose cosecant is x</td></tr>
+          <tr><td>arcsec / sec⁻¹</td><td>(−∞,−1]∪[1,∞)</td><td>[0,π/2)∪(π/2,π]</td><td>The angle whose secant is x</td></tr>
+          <tr><td>arccot / cot⁻¹</td><td>(−∞, ∞)</td><td>(0, π)</td><td>The angle whose cotangent is x</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="box box-warn">
+      <div class="box-label">Critical Warning</div>
+      <p><code>sin⁻¹(x) ≠ 1/sin(x)</code><br>
+         <code>sin⁻¹(x)</code> means <em>arcsine</em> — the <strong>inverse function</strong>. It does NOT mean (sin x)⁻¹ = csc x. Always read it as "the angle whose sine is x."</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ 7 ══ -->
+<section class="section" id="s7">
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <h2>Master Memory Guide</h2>
+  </div>
+
+  <div class="subsection">
+    <h3>7.1 The Big Mnemonics Summary</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>What to Remember</th><th>Mnemonic / Trick</th></tr></thead>
+        <tbody>
+          <tr><td>SOH-CAH-TOA</td><td>"Some Old Hippie Caught Another Hippie Tripping On Acid"</td></tr>
+          <tr><td>Quadrant signs</td><td>"All Students Take Calculus" (Q1→Q4: All, Sin, Tan, Cos positive)</td></tr>
+          <tr><td>Q1 sin values</td><td>0, 1/2, √2/2, √3/2, 1 — "zero, half, root-two halves, root-three halves, one"</td></tr>
+          <tr><td>Q1 cos values</td><td>Just reverse sin: 1, √3/2, √2/2, 1/2, 0</td></tr>
+          <tr><td>Reciprocal pairs</td><td>"Ski Patrol Co-operates Constantly" — Sin↔Csc, Tan↔Cot, Cos↔Sec</td></tr>
+          <tr><td>Even vs. Odd</td><td>Only Cosine and Secant are EVEN (C before S in alphabet)</td></tr>
+          <tr><td>Pythagorean IDs</td><td>Memorize sin²+cos²=1; divide by cos² for tan/sec; by sin² for cot/csc</td></tr>
+          <tr><td>Sum formula for sin</td><td>"Same sign, cross multiply: sin A cos B + cos A sin B"</td></tr>
+          <tr><td>Sum formula for cos</td><td>"SAME terms, OPPOSITE sign: cos A cos B − sin A sin B"</td></tr>
+          <tr><td>Double angle sin</td><td>"2 sin cos" — literally 2 × sine × cosine</td></tr>
+          <tr><td>Period of tan/cot</td><td>Only π (half the period of sin/cos which is 2π)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>7.2 The Trig Identity Hierarchy</h3>
+    <div class="hierarchy">
+      <div class="hier-item"><div class="hier-num">1.</div><p><strong>Convert</strong> everything to sin and cos first</p></div>
+      <div class="hier-item"><div class="hier-num">2.</div><p><strong>Apply</strong> Pythagorean identities to reduce sin² + cos² groups</p></div>
+      <div class="hier-item"><div class="hier-num">3.</div><p><strong>Factor</strong> or combine fractions if needed</p></div>
+      <div class="hier-item"><div class="hier-num">4.</div><p><strong>Look</strong> for double/half angle opportunities if the argument changes</p></div>
+      <div class="hier-item"><div class="hier-num">5.</div><p><strong>Work</strong> on the MORE COMPLEX side of an equation first</p></div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>7.3 Essential Shift Relationships</h3>
+    <div class="formula-grid">
+      <div class="formula-card"><div class="fc-label">Shift by +π/2</div><div class="fc-body">sin(θ + π/2) = cos θ<br>cos(θ + π/2) = −sin θ</div></div>
+      <div class="formula-card"><div class="fc-label">Shift by −π/2</div><div class="fc-body">sin(θ − π/2) = −cos θ<br>cos(θ − π/2) = sin θ</div></div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <h3>7.4 Common Mistakes to Avoid</h3>
+    <ul class="mistake-list">
+      <li><code>tan 90°</code> is UNDEFINED — not infinity. Write "undefined" on tests.</li>
+      <li><code>sin⁻¹(x)</code> is NOT <code>1/sin(x)</code>. It is the arcsine (inverse function).</li>
+      <li>Period formula: new period = original period / |B|, NOT multiplied by B.</li>
+      <li>Phase shift = C/B (not just C). Always divide by B.</li>
+      <li>Amplitude is |A|, never negative. The − in A causes reflection, not negative amplitude.</li>
+      <li><code>cos(A−B) ≠ cos A − cos B</code>. Trig functions are NOT distributive over addition.</li>
+      <li><code>sin²θ</code> means <code>(sin θ)²</code>, not <code>sin(θ²)</code>. The square wraps the whole function value.</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <h3>7.5 Final Study Tips</h3>
+    <div class="step-list">
+      <div class="step-item"><span>Draw the unit circle from memory daily for 2 weeks — fill in all 16 key angles.</span></div>
+      <div class="step-item"><span>Derive SOH-CAH-TOA and the Pythagorean identity from scratch each time — don't just stare at them.</span></div>
+      <div class="step-item"><span>Practice graphing <code>y = A·sin(Bx−C)+D</code> with random A/B/C/D values.</span></div>
+      <div class="step-item"><span>For proofs, never touch both sides at once — only manipulate ONE side.</span></div>
+      <div class="step-item"><span>Use Anki or flashcards for the exact formula phrasing of sum/difference formulas.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════ 8 ══ -->
+<section class="section" id="s8">
+  <div class="section-header">
+    <span class="section-num">08</span>
+    <h2>One-Page Formula Cheat Sheet</h2>
+  </div>
+
+  <div class="cheatsheet">
+    <h3>Quick Reference</h3>
+
+    <div style="margin-bottom:1.2rem;">
+      <div class="subsection" style="margin-bottom:.6rem;"><h3>Fundamental Definitions</h3></div>
+      <div class="cs-row">
+        <div class="cs-item"><span>sin</span> = OPP/HYP</div>
+        <div class="cs-item"><span>cos</span> = ADJ/HYP</div>
+        <div class="cs-item"><span>tan</span> = OPP/ADJ</div>
+        <div class="cs-item"><span>csc</span> = HYP/OPP</div>
+        <div class="cs-item"><span>sec</span> = HYP/ADJ</div>
+        <div class="cs-item"><span>cot</span> = ADJ/OPP</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:1.2rem;">
+      <div class="subsection" style="margin-bottom:.6rem;"><h3>Pythagorean Identities</h3></div>
+      <div class="cs-row">
+        <div class="cs-item"><span>sin²θ + cos²θ</span> = 1</div>
+        <div class="cs-item"><span>1 + tan²θ</span> = sec²θ</div>
+        <div class="cs-item"><span>1 + cot²θ</span> = csc²θ</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:1.2rem;">
+      <div class="subsection" style="margin-bottom:.6rem;"><h3>Sum / Difference</h3></div>
+      <div class="cs-row">
+        <div class="cs-item"><span>sin(A±B)</span> = sinA cosB ± cosA sinB</div>
+        <div class="cs-item"><span>cos(A±B)</span> = cosA cosB ∓ sinA sinB</div>
+        <div class="cs-item"><span>tan(A±B)</span> = (tanA ± tanB) / (1 ∓ tanA tanB)</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:1.2rem;">
+      <div class="subsection" style="margin-bottom:.6rem;"><h3>Double Angle</h3></div>
+      <div class="cs-row">
+        <div class="cs-item"><span>sin 2θ</span> = 2 sinθ cosθ</div>
+        <div class="cs-item"><span>cos 2θ</span> = cos²θ−sin²θ = 2cos²θ−1 = 1−2sin²θ</div>
+        <div class="cs-item"><span>tan 2θ</span> = 2tanθ / (1−tan²θ)</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:1.2rem;">
+      <div class="subsection" style="margin-bottom:.6rem;"><h3>Half Angle</h3></div>
+      <div class="cs-row">
+        <div class="cs-item"><span>sin(θ/2)</span> = ±√[(1−cosθ)/2]</div>
+        <div class="cs-item"><span>cos(θ/2)</span> = ±√[(1+cosθ)/2]</div>
+        <div class="cs-item"><span>tan(θ/2)</span> = (1−cosθ)/sinθ</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:1.2rem;">
+      <div class="subsection" style="margin-bottom:.6rem;"><h3>Transformations: y = A·f(Bx−C)+D</h3></div>
+      <div class="cs-row">
+        <div class="cs-item"><span>Amplitude</span> = |A|</div>
+        <div class="cs-item"><span>Period</span> = 2π/|B| (sin/cos) · π/|B| (tan/cot)</div>
+        <div class="cs-item"><span>Phase Shift</span> = C/B</div>
+        <div class="cs-item"><span>Midline</span> = D</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:1.2rem;">
+      <div class="subsection" style="margin-bottom:.6rem;"><h3>Vertical Asymptotes</h3></div>
+      <div class="cs-row">
+        <div class="cs-item"><span>tan & sec:</span> x = π/2 + nπ</div>
+        <div class="cs-item"><span>csc & cot:</span> x = nπ</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="subsection" style="margin-bottom:.6rem;"><h3>Inverse Function Ranges</h3></div>
+      <div class="cs-row">
+        <div class="cs-item"><span>arcsin:</span> [−π/2, π/2]</div>
+        <div class="cs-item"><span>arccos:</span> [0, π]</div>
+        <div class="cs-item"><span>arctan:</span> (−π/2, π/2)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Trigonometry Complete Study Guide &nbsp;·&nbsp; <em>Practice + Pattern Recognition = Mastery</em>
+</footer>
+
+</body>
+</html>
