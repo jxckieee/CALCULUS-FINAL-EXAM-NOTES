@@ -1,0 +1,943 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,wght@0,300;0,400;1,300&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --c1: #0f2027;
+    --c2: #1a3a4a;
+    --accent: #00d4aa;
+    --accent2: #ff6b6b;
+    --accent3: #ffd93d;
+    --text: #e8f4f0;
+    --muted: #8ab5a7;
+    --card: rgba(255,255,255,0.04);
+    --border: rgba(0,212,170,0.2);
+  }
+
+  body {
+    background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+    font-family: 'Source Serif 4', serif;
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  .header {
+    text-align: center;
+    padding: 2.5rem 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(0,0,0,0.2);
+  }
+
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    color: var(--accent);
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+  }
+
+  .header p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-top: 0.4rem;
+    font-style: italic;
+  }
+
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding: 1rem 1.25rem;
+    background: rgba(0,0,0,0.15);
+    border-bottom: 1px solid var(--border);
+    justify-content: center;
+  }
+
+  .nav button {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .nav button:hover, .nav button.active {
+    background: rgba(0,212,170,0.15);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .content {
+    padding: 1.25rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--accent);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; }
+  .grid-1 { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+  }
+
+  .card h3 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--accent);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .formula {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    gap: 0.5rem;
+  }
+
+  .formula:last-child { border-bottom: none; }
+
+  .f-name {
+    font-size: 0.82rem;
+    color: var(--muted);
+    min-width: 90px;
+    flex-shrink: 0;
+    font-style: italic;
+  }
+
+  .f-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--text);
+    text-align: right;
+    line-height: 1.5;
+  }
+
+  .f-val .hi { color: var(--accent); }
+  .f-val .hi2 { color: var(--accent3); }
+  .f-val .hi3 { color: var(--accent2); }
+
+  .rule-box {
+    background: rgba(0,212,170,0.06);
+    border: 1px solid rgba(0,212,170,0.3);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .rule-box h4 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 0.35rem;
+  }
+
+  .rule-box p {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .rule-box .note {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 0.3rem;
+    font-style: italic;
+    font-family: 'Source Serif 4', serif;
+  }
+
+  .tip-box {
+    background: rgba(255,107,107,0.08);
+    border: 1px solid rgba(255,107,107,0.3);
+    border-left: 3px solid var(--accent2);
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+    margin-top: 0.75rem;
+  }
+
+  .tip-box h4 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent2);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+
+  .tip-box p {
+    font-size: 0.82rem;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .warn-box {
+    background: rgba(255,217,61,0.07);
+    border: 1px solid rgba(255,217,61,0.3);
+    border-left: 3px solid var(--accent3);
+    border-radius: 6px;
+    padding: 0.7rem 1rem;
+    margin-top: 0.75rem;
+  }
+
+  .warn-box h4 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent3);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+
+  .warn-box p {
+    font-size: 0.82rem;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .big-formula {
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.05rem;
+    color: var(--accent3);
+    padding: 0.75rem;
+    background: rgba(255,217,61,0.06);
+    border-radius: 6px;
+    margin: 0.5rem 0;
+    border: 1px solid rgba(255,217,61,0.2);
+    line-height: 1.7;
+  }
+
+  .step-list {
+    list-style: none;
+    counter-reset: steps;
+  }
+
+  .step-list li {
+    counter-increment: steps;
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.45rem 0;
+    font-size: 0.85rem;
+    color: var(--text);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .step-list li::before {
+    content: counter(steps);
+    background: var(--accent);
+    color: #0f2027;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .tag {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  .tag-green { background: rgba(0,212,170,0.15); color: var(--accent); border: 1px solid rgba(0,212,170,0.3); }
+  .tag-red { background: rgba(255,107,107,0.15); color: var(--accent2); border: 1px solid rgba(255,107,107,0.3); }
+  .tag-yellow { background: rgba(255,217,61,0.15); color: var(--accent3); border: 1px solid rgba(255,217,61,0.3); }
+
+  .divider { height: 1px; background: var(--border); margin: 1rem 0; }
+
+  .two-col-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.3rem;
+  }
+
+  .two-col-list .formula { border-bottom: none; padding: 0.3rem 0; }
+
+  @media (max-width: 640px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .two-col-list { grid-template-columns: 1fr; }
+    .header h1 { font-size: 1.6rem; }
+  }
+</style>
+
+<div class="header">
+  <h1>Calculus I — Final Exam Cheat Sheet</h1>
+  <p>Limits · Derivatives · Integrals · Theorems · Applications</p>
+</div>
+
+<div class="nav">
+  <button class="active" onclick="show('limits')">Limits</button>
+  <button onclick="show('derivatives')">Derivatives</button>
+  <button onclick="show('deriv-rules')">Deriv. Rules</button>
+  <button onclick="show('trig')">Trig Derivs</button>
+  <button onclick="show('integrals')">Integrals</button>
+  <button onclick="show('ftc')">FTC</button>
+  <button onclick="show('techniques')">Int. Techniques</button>
+  <button onclick="show('applications')">Applications</button>
+  <button onclick="show('theorems')">Theorems</button>
+  <button onclick="show('quick')">Quick Ref</button>
+</div>
+
+<div class="content">
+
+  <!-- LIMITS -->
+  <div id="limits" class="section active">
+    <div class="section-title">Limits</div>
+
+    <div class="grid-2">
+      <div>
+        <div class="rule-box">
+          <h4>Definition of a Limit</h4>
+          <p>lim<sub>x→a</sub> f(x) = L means f(x) gets<br>arbitrarily close to L as x → a</p>
+          <p class="note">Left-hand: x → a⁻ &nbsp;|&nbsp; Right-hand: x → a⁺</p>
+        </div>
+        <div class="rule-box">
+          <h4>Limit Exists When</h4>
+          <p>lim<sub>x→a⁻</sub> f(x) = lim<sub>x→a⁺</sub> f(x) = L</p>
+          <p class="note">Both one-sided limits must be equal</p>
+        </div>
+        <div class="rule-box">
+          <h4>Continuity at x = a</h4>
+          <p>1. f(a) is defined<br>2. lim<sub>x→a</sub> f(x) exists<br>3. lim<sub>x→a</sub> f(x) = f(a)</p>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <h3>Limit Laws</h3>
+          <div class="formula"><span class="f-name">Sum</span><span class="f-val">lim[f ± g] = L ± M</span></div>
+          <div class="formula"><span class="f-name">Product</span><span class="f-val">lim[f · g] = L · M</span></div>
+          <div class="formula"><span class="f-name">Quotient</span><span class="f-val">lim[f/g] = L/M, M ≠ 0</span></div>
+          <div class="formula"><span class="f-name">Power</span><span class="f-val">lim[f]ⁿ = Lⁿ</span></div>
+          <div class="formula"><span class="f-name">Constant</span><span class="f-val">lim[c·f] = c·L</span></div>
+          <div class="formula"><span class="f-name">Root</span><span class="f-val">lim[√f] = √L (L ≥ 0)</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3>Special / Important Limits</h3>
+        <div class="big-formula">lim<sub>x→0</sub> sin(x)/x = 1</div>
+        <div class="big-formula">lim<sub>x→0</sub> (1 - cos x)/x = 0</div>
+        <div class="big-formula">lim<sub>x→0</sub> (eˣ - 1)/x = 1</div>
+        <div class="big-formula">lim<sub>x→∞</sub> (1 + 1/x)ˣ = e</div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:0.75rem">
+          <h3>Indeterminate Forms</h3>
+          <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.25rem">
+            <span class="tag tag-red">0/0</span>
+            <span class="tag tag-red">∞/∞</span>
+            <span class="tag tag-red">0·∞</span>
+            <span class="tag tag-red">∞ - ∞</span>
+            <span class="tag tag-red">0⁰</span>
+            <span class="tag tag-red">∞⁰</span>
+            <span class="tag tag-red">1^∞</span>
+          </div>
+          <p style="font-size:0.8rem;color:var(--muted);margin-top:0.6rem">→ Use L'Hôpital's Rule or algebraic manipulation</p>
+        </div>
+        <div class="rule-box">
+          <h4>L'Hôpital's Rule</h4>
+          <p>If 0/0 or ±∞/∞ form:<br>lim f(x)/g(x) = lim f′(x)/g′(x)</p>
+          <p class="note">Differentiate numerator & denominator separately. May apply repeatedly.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Techniques for Evaluating Limits</h3>
+        <ul class="step-list">
+          <li>Direct substitution — plug in x = a first</li>
+          <li>Factor & cancel common factors</li>
+          <li>Multiply by conjugate (for radicals)</li>
+          <li>Divide by highest power of x (for ∞ limits)</li>
+          <li>L'Hôpital's Rule for indeterminate forms</li>
+          <li>Squeeze Theorem when bounded by known limits</li>
+        </ul>
+      </div>
+      <div>
+        <div class="rule-box">
+          <h4>Squeeze Theorem</h4>
+          <p>If g(x) ≤ f(x) ≤ h(x) near a, and<br>lim g(x) = lim h(x) = L,<br>then lim f(x) = L</p>
+        </div>
+        <div class="rule-box">
+          <h4>Infinite Limits (Asymptotes)</h4>
+          <p>If lim f(x) = ±∞ → vertical asymptote at x = a<br>If lim<sub>x→±∞</sub> f(x) = L → horizontal asymptote y = L</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DERIVATIVES -->
+  <div id="derivatives" class="section">
+    <div class="section-title">Derivatives — Fundamentals</div>
+    <div class="grid-2">
+      <div>
+        <div class="rule-box">
+          <h4>Definition of the Derivative</h4>
+          <p>f′(x) = lim<sub>h→0</sub> [f(x+h) − f(x)] / h</p>
+          <p class="note">Also: f′(a) = lim<sub>x→a</sub> [f(x)−f(a)] / (x−a)</p>
+        </div>
+        <div class="rule-box">
+          <h4>Differentiability</h4>
+          <p>If f is differentiable at a → f is continuous at a<br><span style="color:var(--accent2)">Converse is FALSE</span> — continuous ≠ differentiable</p>
+          <p class="note">Fails at: corners, cusps, vertical tangents, discontinuities</p>
+        </div>
+        <div class="rule-box">
+          <h4>Notation</h4>
+          <p>f′(x) = y′ = dy/dx = df/dx = D[f]</p>
+          <p class="note">Higher order: f″, f‴, f⁽⁴⁾ or d²y/dx², d³y/dx³ ...</p>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Basic Derivative Rules</h3>
+        <div class="formula"><span class="f-name">Constant</span><span class="f-val"><span class="hi">d/dx [c] = 0</span></span></div>
+        <div class="formula"><span class="f-name">Identity</span><span class="f-val"><span class="hi">d/dx [x] = 1</span></span></div>
+        <div class="formula"><span class="f-name">Power Rule</span><span class="f-val"><span class="hi">d/dx [xⁿ] = nxⁿ⁻¹</span></span></div>
+        <div class="formula"><span class="f-name">Constant mult</span><span class="f-val">d/dx [cf] = c·f′</span></div>
+        <div class="formula"><span class="f-name">Sum/Diff</span><span class="f-val">d/dx [f ± g] = f′ ± g′</span></div>
+        <div class="formula"><span class="f-name">Exponential</span><span class="f-val"><span class="hi">d/dx [eˣ] = eˣ</span></span></div>
+        <div class="formula"><span class="f-name">General exp</span><span class="f-val">d/dx [aˣ] = aˣ ln(a)</span></div>
+        <div class="formula"><span class="f-name">Natural log</span><span class="f-val"><span class="hi">d/dx [ln x] = 1/x</span></span></div>
+        <div class="formula"><span class="f-name">Log base a</span><span class="f-val">d/dx [log<sub>a</sub>x] = 1/(x ln a)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DERIVATIVE RULES -->
+  <div id="deriv-rules" class="section">
+    <div class="section-title">Derivative Rules — Product, Quotient, Chain</div>
+    <div class="grid-1">
+      <div class="rule-box">
+        <h4>Product Rule</h4>
+        <p>d/dx [f · g] = f′g + fg′</p>
+        <p class="note">Mnemonic: "first times derivative of second, plus second times derivative of first"</p>
+      </div>
+      <div class="rule-box">
+        <h4>Quotient Rule</h4>
+        <p>d/dx [f/g] = (f′g − fg′) / g²</p>
+        <p class="note">Mnemonic: "low d-high minus high d-low, over low squared" &nbsp;→&nbsp; (lo·dhi − hi·dlo) / lo²</p>
+      </div>
+      <div class="rule-box">
+        <h4>Chain Rule</h4>
+        <p>d/dx [f(g(x))] = f′(g(x)) · g′(x)</p>
+        <p class="note">Derivative of outer function (keeping inside intact) times derivative of inner function</p>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Chain Rule — Examples</h3>
+        <div class="formula"><span class="f-name">sin(x²)</span><span class="f-val">cos(x²) · 2x</span></div>
+        <div class="formula"><span class="f-name">e^(3x)</span><span class="f-val">e^(3x) · 3</span></div>
+        <div class="formula"><span class="f-name">(x²+1)⁵</span><span class="f-val">5(x²+1)⁴ · 2x</span></div>
+        <div class="formula"><span class="f-name">ln(sin x)</span><span class="f-val">(1/sin x) · cos x = cot x</span></div>
+        <div class="formula"><span class="f-name">√(x³+1)</span><span class="f-val">(3x²) / (2√(x³+1))</span></div>
+      </div>
+      <div>
+        <div class="card">
+          <h3>Implicit Differentiation</h3>
+          <ul class="step-list" style="list-style:none;counter-reset:steps">
+            <li>Differentiate both sides w.r.t. x</li>
+            <li>Apply chain rule: d/dx[f(y)] = f′(y)·(dy/dx)</li>
+            <li>Collect all dy/dx terms on one side</li>
+            <li>Factor out and solve for dy/dx</li>
+          </ul>
+          <div class="tip-box">
+            <h4>Example</h4>
+            <p>x² + y² = 25 → 2x + 2y(dy/dx) = 0 → dy/dx = −x/y</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Logarithmic Differentiation</h3>
+        <ul class="step-list">
+          <li>Take ln of both sides: ln y = ln[f(x)]</li>
+          <li>Simplify using log properties</li>
+          <li>Differentiate implicitly</li>
+          <li>Multiply both sides by y, substitute back</li>
+        </ul>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:0.6rem">Use for: yˣ, xˣ, products of many functions</p>
+      </div>
+      <div class="card">
+        <h3>Related Rates Strategy</h3>
+        <ul class="step-list">
+          <li>Identify all quantities and rates</li>
+          <li>Write an equation relating variables</li>
+          <li>Differentiate implicitly with respect to t</li>
+          <li>Plug in known values and solve</li>
+        </ul>
+        <div class="warn-box">
+          <h4>Common mistake</h4>
+          <p>Do NOT substitute known values before differentiating — only after.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRIG DERIVATIVES -->
+  <div id="trig" class="section">
+    <div class="section-title">Trigonometric Derivatives &amp; Identities</div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Trig Derivatives</h3>
+        <div class="formula"><span class="f-name">sin x</span><span class="f-val"><span class="hi">cos x</span></span></div>
+        <div class="formula"><span class="f-name">cos x</span><span class="f-val"><span class="hi3">−sin x</span></span></div>
+        <div class="formula"><span class="f-name">tan x</span><span class="f-val"><span class="hi">sec² x</span></span></div>
+        <div class="formula"><span class="f-name">cot x</span><span class="f-val"><span class="hi3">−csc² x</span></span></div>
+        <div class="formula"><span class="f-name">sec x</span><span class="f-val">sec x tan x</span></div>
+        <div class="formula"><span class="f-name">csc x</span><span class="f-val"><span class="hi3">−csc x cot x</span></span></div>
+      </div>
+      <div class="card">
+        <h3>Inverse Trig Derivatives</h3>
+        <div class="formula"><span class="f-name">arcsin x</span><span class="f-val">1 / √(1−x²)</span></div>
+        <div class="formula"><span class="f-name">arccos x</span><span class="f-val">−1 / √(1−x²)</span></div>
+        <div class="formula"><span class="f-name">arctan x</span><span class="f-val"><span class="hi">1 / (1+x²)</span></span></div>
+        <div class="formula"><span class="f-name">arccot x</span><span class="f-val">−1 / (1+x²)</span></div>
+        <div class="formula"><span class="f-name">arcsec x</span><span class="f-val">1 / (|x|√(x²−1))</span></div>
+        <div class="formula"><span class="f-name">arccsc x</span><span class="f-val">−1 / (|x|√(x²−1))</span></div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Pythagorean Identities</h3>
+        <div class="big-formula">sin²x + cos²x = 1</div>
+        <div class="big-formula">1 + tan²x = sec²x</div>
+        <div class="big-formula">1 + cot²x = csc²x</div>
+      </div>
+      <div class="card">
+        <h3>Double Angle &amp; Half Angle</h3>
+        <div class="formula"><span class="f-name">sin(2x)</span><span class="f-val">2 sin x cos x</span></div>
+        <div class="formula"><span class="f-name">cos(2x)</span><span class="f-val">cos²x − sin²x</span></div>
+        <div class="formula"><span class="f-name">cos(2x)</span><span class="f-val">2cos²x − 1 = 1 − 2sin²x</span></div>
+        <div class="formula"><span class="f-name">sin²x</span><span class="f-val">(1 − cos 2x) / 2</span></div>
+        <div class="formula"><span class="f-name">cos²x</span><span class="f-val">(1 + cos 2x) / 2</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTEGRALS -->
+  <div id="integrals" class="section">
+    <div class="section-title">Integration — Basic Formulas</div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Power &amp; Basic Rules</h3>
+        <div class="formula"><span class="f-name">Constant</span><span class="f-val">∫c dx = cx + C</span></div>
+        <div class="formula"><span class="f-name">Power Rule</span><span class="f-val"><span class="hi">∫xⁿ dx = xⁿ⁺¹/(n+1) + C, n≠−1</span></span></div>
+        <div class="formula"><span class="f-name">1/x</span><span class="f-val"><span class="hi">∫1/x dx = ln|x| + C</span></span></div>
+        <div class="formula"><span class="f-name">eˣ</span><span class="f-val"><span class="hi">∫eˣ dx = eˣ + C</span></span></div>
+        <div class="formula"><span class="f-name">aˣ</span><span class="f-val">∫aˣ dx = aˣ/ln(a) + C</span></div>
+        <div class="formula"><span class="f-name">Sum/Diff</span><span class="f-val">∫[f ± g] dx = ∫f dx ± ∫g dx</span></div>
+        <div class="formula"><span class="f-name">Const mult</span><span class="f-val">∫cf dx = c∫f dx</span></div>
+      </div>
+      <div class="card">
+        <h3>Trig Integrals</h3>
+        <div class="formula"><span class="f-name">sin x</span><span class="f-val">∫sin x dx = −cos x + C</span></div>
+        <div class="formula"><span class="f-name">cos x</span><span class="f-val">∫cos x dx = sin x + C</span></div>
+        <div class="formula"><span class="f-name">sec² x</span><span class="f-val"><span class="hi">∫sec²x dx = tan x + C</span></span></div>
+        <div class="formula"><span class="f-name">csc² x</span><span class="f-val">∫csc²x dx = −cot x + C</span></div>
+        <div class="formula"><span class="f-name">sec x tan x</span><span class="f-val">∫sec x tan x dx = sec x + C</span></div>
+        <div class="formula"><span class="f-name">csc x cot x</span><span class="f-val">∫csc x cot x dx = −csc x + C</span></div>
+        <div class="formula"><span class="f-name">tan x</span><span class="f-val">∫tan x dx = ln|sec x| + C</span></div>
+        <div class="formula"><span class="f-name">sec x</span><span class="f-val">∫sec x dx = ln|sec x + tan x| + C</span></div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="card">
+      <h3>Inverse Trig Integrals</h3>
+      <div class="grid-2">
+        <div>
+          <div class="formula"><span class="f-name">1/√(a²−u²)</span><span class="f-val">arcsin(u/a) + C</span></div>
+          <div class="formula"><span class="f-name">1/(a²+u²)</span><span class="f-val">(1/a)arctan(u/a) + C</span></div>
+        </div>
+        <div>
+          <div class="formula"><span class="f-name">1/(u√(u²−a²))</span><span class="f-val">(1/a)arcsec(|u|/a) + C</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FTC -->
+  <div id="ftc" class="section">
+    <div class="section-title">Fundamental Theorem of Calculus</div>
+    <div class="grid-1">
+      <div class="rule-box">
+        <h4>FTC Part 1 — Differentiation of an Integral</h4>
+        <p>If F(x) = ∫<sub>a</sub><sup>x</sup> f(t) dt, then F′(x) = f(x)</p>
+        <p class="note">The derivative "undoes" the integral. f must be continuous on [a, b].</p>
+      </div>
+      <div class="rule-box">
+        <h4>FTC Part 1 — Chain Rule Extension</h4>
+        <p>d/dx ∫<sub>a</sub><sup>g(x)</sup> f(t) dt = f(g(x)) · g′(x)</p>
+        <p class="note">Apply chain rule when the upper limit is a function of x</p>
+      </div>
+      <div class="rule-box">
+        <h4>FTC Part 2 — Evaluation Theorem</h4>
+        <p>∫<sub>a</sub><sup>b</sup> f(x) dx = F(b) − F(a), where F′ = f</p>
+        <p class="note">Find antiderivative F, evaluate at endpoints, subtract. This is the workhorse of definite integrals.</p>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Definite Integral Properties</h3>
+        <div class="formula"><span class="f-name">Reverse limits</span><span class="f-val">∫<sub>b</sub><sup>a</sup> f dx = −∫<sub>a</sub><sup>b</sup> f dx</span></div>
+        <div class="formula"><span class="f-name">Same limits</span><span class="f-val">∫<sub>a</sub><sup>a</sup> f dx = 0</span></div>
+        <div class="formula"><span class="f-name">Split interval</span><span class="f-val">∫<sub>a</sub><sup>b</sup> f = ∫<sub>a</sub><sup>c</sup> f + ∫<sub>c</sub><sup>b</sup> f</span></div>
+        <div class="formula"><span class="f-name">Linearity</span><span class="f-val">∫[cf ± dg] = c∫f ± d∫g</span></div>
+        <div class="formula"><span class="f-name">Comparison</span><span class="f-val">f ≥ g on [a,b] → ∫f ≥ ∫g</span></div>
+        <div class="formula"><span class="f-name">Even fn</span><span class="f-val">∫<sub>−a</sub><sup>a</sup> f dx = 2∫<sub>0</sub><sup>a</sup> f dx</span></div>
+        <div class="formula"><span class="f-name">Odd fn</span><span class="f-val">∫<sub>−a</sub><sup>a</sup> f dx = 0</span></div>
+      </div>
+      <div>
+        <div class="card">
+          <h3>Net Change Theorem</h3>
+          <div class="big-formula">∫<sub>a</sub><sup>b</sup> F′(x) dx = F(b) − F(a)</div>
+          <p style="font-size:0.82rem;color:var(--muted);margin-top:0.5rem">The integral of a rate of change = net change in the quantity</p>
+        </div>
+        <div class="warn-box" style="margin-top:0.75rem">
+          <h4>Total vs Net Displacement</h4>
+          <p>Net displacement: ∫v(t)dt<br>Total distance: ∫|v(t)|dt (split where v = 0)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTEGRATION TECHNIQUES -->
+  <div id="techniques" class="section">
+    <div class="section-title">Integration Techniques</div>
+
+    <div class="grid-2">
+      <div>
+        <div class="rule-box">
+          <h4>U-Substitution (Sub Rule)</h4>
+          <p>∫f(g(x))·g′(x) dx = ∫f(u) du<br>where u = g(x), du = g′(x) dx</p>
+        </div>
+        <div class="card" style="margin-top:0.75rem">
+          <h3>U-Sub Steps</h3>
+          <ul class="step-list">
+            <li>Choose u = g(x) — usually the "inside" function</li>
+            <li>Compute du = g′(x) dx</li>
+            <li>Solve for dx: dx = du/g′(x)</li>
+            <li>Substitute everything, integrate in terms of u</li>
+            <li>Back-substitute u = g(x)</li>
+            <li>For definite integrals: change limits in terms of u</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <h3>U-Sub — Common Choices</h3>
+          <div class="formula"><span class="f-name">∫sin(x²)·2x dx</span><span class="f-val">u = x²</span></div>
+          <div class="formula"><span class="f-name">∫eˣ·eˣ dx</span><span class="f-val">u = eˣ</span></div>
+          <div class="formula"><span class="f-name">∫(x²+1)³·2x dx</span><span class="f-val">u = x²+1</span></div>
+          <div class="formula"><span class="f-name">∫cos x/sin x dx</span><span class="f-val">u = sin x</span></div>
+          <div class="formula"><span class="f-name">∫x·e^(x²) dx</span><span class="f-val">u = x²</span></div>
+          <div class="formula"><span class="f-name">∫ln(x)/x dx</span><span class="f-val">u = ln x</span></div>
+        </div>
+        <div class="tip-box" style="margin-top:0.75rem">
+          <h4>Tip</h4>
+          <p>What you pick as u must have its derivative (up to a constant) also present in the integrand.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="grid-2">
+      <div>
+        <div class="rule-box">
+          <h4>Integration by Parts</h4>
+          <p>∫u dv = uv − ∫v du</p>
+          <p class="note">Choose u and dv, then find du = u′dx and v = ∫dv</p>
+        </div>
+        <div class="card" style="margin-top:0.75rem">
+          <h3>LIATE — Choosing u</h3>
+          <p style="font-size:0.82rem;margin-bottom:0.6rem;color:var(--muted)">Pick u as the first type that appears:</p>
+          <div class="formula"><span class="f-name" style="color:var(--accent)">L</span><span class="f-val">Logarithms (ln x, log x)</span></div>
+          <div class="formula"><span class="f-name" style="color:var(--accent)">I</span><span class="f-val">Inverse trig (arctan, arcsin...)</span></div>
+          <div class="formula"><span class="f-name" style="color:var(--accent)">A</span><span class="f-val">Algebraic (xⁿ, polynomials)</span></div>
+          <div class="formula"><span class="f-name" style="color:var(--accent)">T</span><span class="f-val">Trig (sin, cos, tan...)</span></div>
+          <div class="formula"><span class="f-name" style="color:var(--accent)">E</span><span class="f-val">Exponential (eˣ, aˣ)</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Riemann Sums</h3>
+        <div class="formula"><span class="f-name">Δx</span><span class="f-val">(b − a) / n</span></div>
+        <div class="formula"><span class="f-name">xᵢ (right)</span><span class="f-val">a + i·Δx</span></div>
+        <div class="formula"><span class="f-name">xᵢ (left)</span><span class="f-val">a + (i−1)·Δx</span></div>
+        <div class="formula"><span class="f-name">xᵢ (mid)</span><span class="f-val">a + (i−½)·Δx</span></div>
+        <div class="divider"></div>
+        <div class="big-formula">∫<sub>a</sub><sup>b</sup> f(x)dx = lim<sub>n→∞</sub> Σᵢ f(xᵢ)·Δx</div>
+        <div class="card" style="margin-top:0.75rem;background:rgba(0,0,0,0.2)">
+          <h3>Useful Summation Formulas</h3>
+          <div class="formula"><span class="f-name">Σi</span><span class="f-val">n(n+1)/2</span></div>
+          <div class="formula"><span class="f-name">Σi²</span><span class="f-val">n(n+1)(2n+1)/6</span></div>
+          <div class="formula"><span class="f-name">Σi³</span><span class="f-val">[n(n+1)/2]²</span></div>
+          <div class="formula"><span class="f-name">Σc</span><span class="f-val">cn</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- APPLICATIONS -->
+  <div id="applications" class="section">
+    <div class="section-title">Applications of Derivatives &amp; Integrals</div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Curve Sketching / Analysis</h3>
+        <div class="formula"><span class="f-name">f′(x) > 0</span><span class="f-val">f is increasing</span></div>
+        <div class="formula"><span class="f-name">f′(x) < 0</span><span class="f-val">f is decreasing</span></div>
+        <div class="formula"><span class="f-name">f′(x) = 0</span><span class="f-val">critical point</span></div>
+        <div class="formula"><span class="f-name">f″(x) > 0</span><span class="f-val">concave up</span></div>
+        <div class="formula"><span class="f-name">f″(x) < 0</span><span class="f-val">concave down</span></div>
+        <div class="formula"><span class="f-name">f″(x) = 0</span><span class="f-val">possible inflection point</span></div>
+        <div class="formula"><span class="f-name">f changes concavity</span><span class="f-val">inflection point</span></div>
+      </div>
+      <div class="card">
+        <h3>1st &amp; 2nd Derivative Tests</h3>
+        <div class="rule-box" style="margin-bottom:0.6rem">
+          <h4>First Derivative Test</h4>
+          <p>At critical point c:<br>f′: + → − ⟹ local max<br>f′: − → + ⟹ local min<br>No sign change ⟹ neither</p>
+        </div>
+        <div class="rule-box">
+          <h4>Second Derivative Test</h4>
+          <p>At critical point c where f′(c) = 0:<br>f″(c) > 0 ⟹ local min<br>f″(c) < 0 ⟹ local max<br>f″(c) = 0 ⟹ inconclusive</p>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Area Between Curves</h3>
+        <div class="big-formula">A = ∫<sub>a</sub><sup>b</sup> [f(x) − g(x)] dx</div>
+        <p style="font-size:0.8rem;color:var(--muted);margin:0.5rem 0">where f(x) ≥ g(x) on [a, b]</p>
+        <ul class="step-list">
+          <li>Find intersection points (set f = g)</li>
+          <li>Determine which function is on top</li>
+          <li>Integrate (top − bottom) over interval</li>
+          <li>If they cross, split into sub-intervals</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Tangent Line &amp; Linear Approx</h3>
+        <div class="rule-box">
+          <h4>Tangent Line at (a, f(a))</h4>
+          <p>y − f(a) = f′(a)(x − a)</p>
+        </div>
+        <div class="rule-box" style="margin-top:0.6rem">
+          <h4>Linear Approximation</h4>
+          <p>L(x) = f(a) + f′(a)(x − a)</p>
+          <p class="note">Good approximation for x near a</p>
+        </div>
+        <div class="rule-box" style="margin-top:0.6rem">
+          <h4>Differentials</h4>
+          <p>dy = f′(x) dx</p>
+          <p class="note">Δy ≈ dy for small Δx</p>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Average Value of a Function</h3>
+        <div class="big-formula">f<sub>avg</sub> = (1/(b−a)) · ∫<sub>a</sub><sup>b</sup> f(x) dx</div>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:0.5rem">Mean Value Theorem for Integrals: there exists c in [a,b] such that f(c) = f<sub>avg</sub></p>
+      </div>
+      <div class="card">
+        <h3>Position / Velocity / Acceleration</h3>
+        <div class="formula"><span class="f-name">v(t)</span><span class="f-val">= s′(t)</span></div>
+        <div class="formula"><span class="f-name">a(t)</span><span class="f-val">= v′(t) = s″(t)</span></div>
+        <div class="formula"><span class="f-name">s(t)</span><span class="f-val">= ∫v(t) dt</span></div>
+        <div class="formula"><span class="f-name">v(t)</span><span class="f-val">= ∫a(t) dt</span></div>
+        <div class="formula"><span class="f-name">Net displ.</span><span class="f-val">= ∫<sub>a</sub><sup>b</sup> v(t) dt</span></div>
+        <div class="formula"><span class="f-name">Total dist.</span><span class="f-val">= ∫<sub>a</sub><sup>b</sup> |v(t)| dt</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THEOREMS -->
+  <div id="theorems" class="section">
+    <div class="section-title">Key Theorems</div>
+    <div class="grid-1">
+      <div class="rule-box">
+        <h4>Intermediate Value Theorem (IVT)</h4>
+        <p>If f is continuous on [a,b] and N is between f(a) and f(b), then ∃ c ∈ (a,b) such that f(c) = N</p>
+        <p class="note">Use to show a root exists: if f(a) and f(b) have opposite signs, there's a zero in (a,b)</p>
+      </div>
+      <div class="rule-box">
+        <h4>Mean Value Theorem (MVT)</h4>
+        <p>If f is continuous on [a,b] and differentiable on (a,b), then ∃ c ∈ (a,b) such that:<br>f′(c) = [f(b) − f(a)] / (b − a)</p>
+        <p class="note">The instantaneous rate of change equals the average rate of change at some point</p>
+      </div>
+      <div class="rule-box">
+        <h4>Rolle's Theorem</h4>
+        <p>If f is continuous on [a,b], differentiable on (a,b), and f(a) = f(b), then ∃ c ∈ (a,b) such that f′(c) = 0</p>
+        <p class="note">Special case of MVT — a horizontal tangent must exist between equal values</p>
+      </div>
+      <div class="rule-box">
+        <h4>Extreme Value Theorem (EVT)</h4>
+        <p>If f is continuous on [a,b], then f attains an absolute maximum and minimum on [a,b]</p>
+        <p class="note">To find them: evaluate f at all critical points AND endpoints</p>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="card">
+      <h3>Finding Absolute Extrema on [a, b]</h3>
+      <ul class="step-list">
+        <li>Find all critical points (where f′ = 0 or f′ is undefined) in (a,b)</li>
+        <li>Evaluate f at each critical point</li>
+        <li>Evaluate f at the endpoints: f(a) and f(b)</li>
+        <li>The largest value is the absolute max; the smallest is the absolute min</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- QUICK REF -->
+  <div id="quick" class="section">
+    <div class="section-title">Quick Reference — Everything at a Glance</div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3>Derivatives — All at Once</h3>
+        <div class="two-col-list">
+          <div class="formula"><span class="f-name">xⁿ</span><span class="f-val">nxⁿ⁻¹</span></div>
+          <div class="formula"><span class="f-name">eˣ</span><span class="f-val">eˣ</span></div>
+          <div class="formula"><span class="f-name">aˣ</span><span class="f-val">aˣln a</span></div>
+          <div class="formula"><span class="f-name">ln x</span><span class="f-val">1/x</span></div>
+          <div class="formula"><span class="f-name">sin x</span><span class="f-val">cos x</span></div>
+          <div class="formula"><span class="f-name">cos x</span><span class="f-val">−sin x</span></div>
+          <div class="formula"><span class="f-name">tan x</span><span class="f-val">sec²x</span></div>
+          <div class="formula"><span class="f-name">cot x</span><span class="f-val">−csc²x</span></div>
+          <div class="formula"><span class="f-name">sec x</span><span class="f-val">sec x tan x</span></div>
+          <div class="formula"><span class="f-name">csc x</span><span class="f-val">−csc x cot x</span></div>
+          <div class="formula"><span class="f-name">arcsin x</span><span class="f-val">1/√(1−x²)</span></div>
+          <div class="formula"><span class="f-name">arctan x</span><span class="f-val">1/(1+x²)</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Integrals — All at Once</h3>
+        <div class="two-col-list">
+          <div class="formula"><span class="f-name">xⁿ</span><span class="f-val">xⁿ⁺¹/(n+1)</span></div>
+          <div class="formula"><span class="f-name">1/x</span><span class="f-val">ln|x|</span></div>
+          <div class="formula"><span class="f-name">eˣ</span><span class="f-val">eˣ</span></div>
+          <div class="formula"><span class="f-name">aˣ</span><span class="f-val">aˣ/ln a</span></div>
+          <div class="formula"><span class="f-name">sin x</span><span class="f-val">−cos x</span></div>
+          <div class="formula"><span class="f-name">cos x</span><span class="f-val">sin x</span></div>
+          <div class="formula"><span class="f-name">sec²x</span><span class="f-val">tan x</span></div>
+          <div class="formula"><span class="f-name">csc²x</span><span class="f-val">−cot x</span></div>
+          <div class="formula"><span class="f-name">sec x tan x</span><span class="f-val">sec x</span></div>
+          <div class="formula"><span class="f-name">csc x cot x</span><span class="f-val">−csc x</span></div>
+          <div class="formula"><span class="f-name">tan x</span><span class="f-val">ln|sec x|</span></div>
+          <div class="formula"><span class="f-name">1/√(1−x²)</span><span class="f-val">arcsin x</span></div>
+        </div>
+        <p style="font-size:0.72rem;color:var(--muted);margin-top:0.5rem;text-align:right">+ C for all indefinite integrals</p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="grid-3">
+      <div class="card">
+        <h3>Key Theorems</h3>
+        <div class="formula"><span class="f-name">IVT</span><span class="f-val" style="font-size:0.76rem">∃ root if signs differ</span></div>
+        <div class="formula"><span class="f-name">MVT</span><span class="f-val" style="font-size:0.76rem">f′(c) = [f(b)−f(a)]/(b−a)</span></div>
+        <div class="formula"><span class="f-name">EVT</span><span class="f-val" style="font-size:0.76rem">abs. ext. on closed interval</span></div>
+        <div class="formula"><span class="f-name">Rolle's</span><span class="f-val" style="font-size:0.76rem">f(a)=f(b) ⟹ f′(c)=0</span></div>
+        <div class="formula"><span class="f-name">FTC I</span><span class="f-val" style="font-size:0.76rem">d/dx∫f dt = f(x)</span></div>
+        <div class="formula"><span class="f-name">FTC II</span><span class="f-val" style="font-size:0.76rem">∫f = F(b)−F(a)</span></div>
+      </div>
+      <div class="card">
+        <h3>Common Mistakes</h3>
+        <div class="tip-box" style="margin-bottom:0.5rem">
+          <h4>Derivative</h4>
+          <p>d/dx[uv] ≠ u′v′ — must use product rule</p>
+        </div>
+        <div class="tip-box" style="margin-bottom:0.5rem">
+          <h4>Chain Rule</h4>
+          <p>d/dx[f(g(x))] ≠ f′(g(x)) — must multiply by g′(x)</p>
+        </div>
+        <div class="tip-box">
+          <h4>Integration</h4>
+          <p>∫1/x² dx ≠ ln|x²| — apply power rule: −1/x + C</p>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Signs of f, f′, f″</h3>
+        <div class="formula"><span class="f-name">f > 0</span><span class="f-val" style="font-size:0.76rem">above x-axis</span></div>
+        <div class="formula"><span class="f-name">f′ > 0</span><span class="f-val" style="font-size:0.76rem">increasing</span></div>
+        <div class="formula"><span class="f-name">f′ = 0</span><span class="f-val" style="font-size:0.76rem">critical point</span></div>
+        <div class="formula"><span class="f-name">f″ > 0</span><span class="f-val" style="font-size:0.76rem">concave up (∪)</span></div>
+        <div class="formula"><span class="f-name">f″ = 0</span><span class="f-val" style="font-size:0.76rem">inflection pt candidate</span></div>
+        <div class="formula"><span class="f-name">f″ < 0</span><span class="f-val" style="font-size:0.76rem">concave down (∩)</span></div>
+      </div>
+    </div>
+
+    <div class="warn-box" style="margin-top:1rem">
+      <h4>Always remember</h4>
+      <p>Every indefinite integral needs + C &nbsp;|&nbsp; Check domain before differentiating &nbsp;|&nbsp; Verify limits exist before applying theorems &nbsp;|&nbsp; For definite integrals, change bounds when using u-sub</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
